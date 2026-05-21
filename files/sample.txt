@@ -1,0 +1,2 @@
+Artificial intelligence is changing how people work, learn, and build software.
+This project will read files and generate summaries using AI.
