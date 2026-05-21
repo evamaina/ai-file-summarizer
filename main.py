@@ -21,7 +21,18 @@ def summarize_with_ai(text):
     response = client.responses.create(
         model="gpt-4.1-mini",
         input=f"""
-        Summarize the following text clearly and simply.
+        You are a helpful assistant that summarizes documents.
+
+        Summarize the text using this format:
+
+        1. Short Summary:
+        Write 2-3 sentences.
+
+        2. Key Points:
+        - List the most important ideas as bullet points.
+
+        3. Main Takeaway:
+        Write one final sentence explaining the most important message.
 
         Text:
         {text}
@@ -36,10 +47,18 @@ def read_pdf_file(file_path):
         text = ""
 
         for page in reader.pages:
-            text += page.extract_text() or ""
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
 
         return text
-    except Exception:
+
+    except FileNotFoundError:
+        print("PDF Error: File was not found.")
+        return None
+
+    except Exception as error:
+        print(f"PDF Error: {error}")
         return None
 
 def main():
